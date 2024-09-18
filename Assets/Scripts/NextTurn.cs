@@ -9,7 +9,7 @@ public class NextTurn : MonoBehaviour
     public int turnNumber = 0;
     public int actionEnd = 0;
     public Action monsterAction;
-    public List<List<Action>> monsterActions;
+    public Stack<Stack<Action>> monsterActions;
     public MeshRenderer meshRenderer;
     public Player player;
     public Monster monster;
@@ -53,7 +53,13 @@ public class NextTurn : MonoBehaviour
 
     void OnMouseDown()
     {
-
+        Stack<Stack<Action>> monsterMove = new Stack<Stack<Action>>();
+        Stack<Action> actions;
+        if (monsterMove.Peek().Count == 0)
+        {
+            monsterMove.Pop();
+        }
+        actions = monsterMove.Peek();
         if (turnNumber >= actionEnd)
         {
             //new action
@@ -62,18 +68,18 @@ public class NextTurn : MonoBehaviour
             switch (randomAction)
             {
                 case 0:
-                    monsterActions = new MonsterActions().ClawSwipe();
-                    CountActions(monsterActions);
+                    monsterMove = new MonsterActions().ClawSwipe();
+                    CountActions(monsterMove);
 
                     break;
                 case 1:
-                    monsterActions = new MonsterActions().Tackle();
-                    CountActions(monsterActions);
+                    monsterMove = new MonsterActions().Tackle();
+                    CountActions(monsterMove);
                     
                     break;
                 case 2:
-                    monsterActions = new MonsterActions().Tackle();
-                    CountActions(monsterActions);
+                    monsterMove = new MonsterActions().Tackle();
+                    CountActions(monsterMove);
                     
                     break;
             }
@@ -84,29 +90,19 @@ public class NextTurn : MonoBehaviour
         //monster action
         if ( monsterActions.Count > 0 )
         {
-
-            List<Action> actions = monsterActions[0];
-            
-            if (actions.Count == 0)
-            {
-                monsterActions.Remove(actions);
-                actions = monsterActions[0];
-            }
-            
-            Action action = actions[0];
+            Action action = actions.Pop();
             incomingTurn.playerDamage = action.damage;
             incomingTurn.monsterMove = action.moveDistance;
             incomingTurn.monsterDirection = action.moveDeriction;
             monster.MoveMonster(action.moveDistance);
             player.DamagePlayer(action.damage);
-            actions.Remove(action);
             turnNumber++;
         }
     }
 
-    private void CountActions( List<List<Action>> actions )
+    private void CountActions( Stack<Stack<Action>> actions )
     {
-        foreach (List<Action> newActions in actions)
+        foreach (Stack<Action> newActions in actions)
         {
             foreach (Action action in newActions)
             {
@@ -127,47 +123,47 @@ public class Turn
 public class MonsterActions
 {
 
-    public List<List<Action>> ClawSwipe()
+    public Stack<Stack<Action>> ClawSwipe()
     {
-        List<List<Action>> actionList = new List<List<Action>>();
-        actionList.Add(Wait(2));
-        actionList.Add(Damage(10));
-        actionList.Add(Wait(1));
+        Stack<Stack<Action>> actionList = new Stack<Stack<Action>>();
+        actionList.Push(Wait(2));
+        actionList.Push(Damage(10));
+        actionList.Push(Wait(1));
         return actionList;
     }
 
 
-    public List<List<Action>> Tackle()
+    public Stack<Stack<Action>> Tackle()
     {
-        List<List<Action>> actionList = new List<List<Action>>();
-        actionList.Add(Wait(1));
-        actionList.Add(Move(2, 1, 10));
-        actionList.Add(Wait(3));
+        Stack<Stack<Action>> actionList = new Stack<Stack<Action>>();
+        actionList.Push(Wait(1));
+        actionList.Push(Move(2, 1, 10));
+        actionList.Push(Wait(3));
         return actionList;
     }
 
-    private List<Action> Wait(int length)
+    private Stack<Action> Wait(int length)
     {
-        List<Action> actions = new List<Action>();
+        Stack<Action> actions = new Stack<Action>();
         for (int i = 0; i < length; i++)
         {
-            actions.Add(new Action(0, 0, 0));
+            actions.Push(new Action(0, 0, 0));
         }   
         return actions;
     }
-    public List<Action> Damage(int damage)
+    public Stack<Action> Damage(int damage)
     {
-        List<Action> actions = new List<Action>();
-        actions.Add(new Action(0, 0, damage));
+        Stack<Action> actions = new Stack<Action>();
+        actions.Push(new Action(0, 0, damage));
 
         return actions;
 
     }
 
-    public List<Action> Move(int moveDistance, int moveDeriction, int damage)
+    public Stack<Action> Move(int moveDistance, int moveDeriction, int damage)
     {
-        List<Action> actions = new List<Action>();
-        actions.Add(new Action(moveDistance, moveDeriction, damage));
+        Stack<Action> actions = new Stack<Action>();
+        actions.Push(new Action(moveDistance, moveDeriction, damage));
         return actions;
     }
 }
