@@ -15,6 +15,7 @@ public class Monster : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        currentPosition = 2;
         monsterHealth.maxHealth = monsterStats.maxHealth;
         monsterHealth.curHealth = monsterHealth.maxHealth;
     }

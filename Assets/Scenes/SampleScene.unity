@@ -338,7 +338,7 @@ Transform:
   m_GameObject: {fileID: 195173469}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -13.5, y: 6, z: -20}
+  m_LocalPosition: {x: -13, y: 6, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -479,6 +479,7 @@ MonoBehaviour:
   playerHealthBar: {fileID: 334419973}
   currentCard: {fileID: 0}
   playerHealth: {fileID: 316663077}
+  currentPosition: 0
 --- !u!1 &334419971
 GameObject:
   m_ObjectHideFlags: 0
@@ -2153,6 +2154,8 @@ MonoBehaviour:
     monsterMove: 0
     monsterDirection: 0
   cardSelected: 0
+  recordedPlayerPosition: 0
+  intendedMonsterDirection: 0
 --- !u!65 &1868314573
 BoxCollider:
   m_ObjectHideFlags: 0

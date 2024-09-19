@@ -17,10 +17,14 @@ public class NextTurn : MonoBehaviour
     public int currentMonsterDamage = 10;
     public Turn incomingTurn;
     public bool cardSelected;
+    public int recordedPlayerPosition;
+    public int intendedMonsterDirection;
+    public Stack<Stack<Action>> monsterMove = new Stack<Stack<Action>>();
     Color nextTurnColor;
     // Start is called before the first frame update
     void Start()
     {
+        monsterMove.Push(new Stack<Action>());
         meshRenderer = gameObject.GetComponent<MeshRenderer>();
         player = GameObject.Find("Player").GetComponent<Player>();
         monster = GameObject.Find("Monster").GetComponent<Monster>();
@@ -53,14 +57,16 @@ public class NextTurn : MonoBehaviour
 
     void OnMouseDown()
     {
-        Stack<Stack<Action>> monsterMove = new Stack<Stack<Action>>();
+
+        //player action
+
+        //monster action
         Stack<Action> actions;
         if (monsterMove.Peek().Count == 0)
         {
             monsterMove.Pop();
         }
-        actions = monsterMove.Peek();
-        if (turnNumber >= actionEnd)
+        if (monsterMove.Count == 0)
         {
             //new action
             actionEnd = turnNumber;
@@ -70,34 +76,31 @@ public class NextTurn : MonoBehaviour
                 case 0:
                     monsterMove = new MonsterActions().ClawSwipe();
                     CountActions(monsterMove);
-
                     break;
                 case 1:
                     monsterMove = new MonsterActions().Tackle();
                     CountActions(monsterMove);
-                    
+                    recordedPlayerPosition = player.currentPosition;
+                    intendedMonsterDirection = monster.currentPosition < player.currentPosition ? 1 : -1;
                     break;
                 case 2:
                     monsterMove = new MonsterActions().Tackle();
                     CountActions(monsterMove);
-                    
+                    recordedPlayerPosition = player.currentPosition;
+                    intendedMonsterDirection = monster.currentPosition < player.currentPosition ? 1 : -1;
                     break;
             }
         }
 
-        //player action
-
-        //monster action
-        if ( monsterActions.Count > 0 )
-        {
-            Action action = actions.Pop();
-            incomingTurn.playerDamage = action.damage;
-            incomingTurn.monsterMove = action.moveDistance;
-            incomingTurn.monsterDirection = action.moveDeriction;
-            monster.MoveMonster(action.moveDistance);
-            player.DamagePlayer(action.damage);
-            turnNumber++;
-        }
+        actions = monsterMove.Peek();
+       
+        Action action = actions.Pop();
+        incomingTurn.playerDamage = action.damage;
+        incomingTurn.monsterDirection = action.moveDeriction != 0 ? action.moveDeriction : intendedMonsterDirection;
+        incomingTurn.monsterMove = action.moveDistance * incomingTurn.monsterDirection;
+        monster.MoveMonster(incomingTurn.monsterMove);
+        player.DamagePlayer(action.damage);
+        turnNumber++;
     }
 
     private void CountActions( Stack<Stack<Action>> actions )
@@ -137,7 +140,7 @@ public class MonsterActions
     {
         Stack<Stack<Action>> actionList = new Stack<Stack<Action>>();
         actionList.Push(Wait(1));
-        actionList.Push(Move(2, 1, 10));
+        actionList.Push(Move(2, 0, 10));
         actionList.Push(Wait(3));
         return actionList;
     }

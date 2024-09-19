@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     public HealthBar playerHealthBar;
     public Card currentCard;
     public Health playerHealth;
+    public int currentPosition;
 
     // Start is called before the first frame update
     void Start()

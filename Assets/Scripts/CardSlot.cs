@@ -60,6 +60,7 @@ public class CardSlot : MonoBehaviour
     {
         cardSlots.DeselectCards(); 
         player.transform.position = gameObject.transform.position + new Vector3(0, -13, 0);
+        player.GetComponent<Player>().currentPosition =  (int) (gameObject.transform.position.x / -6.5f);
         highlightBorder.enabled = true;
         highlightBorder.material.color = Color.black;
         isSelected = true;
