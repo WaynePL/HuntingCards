@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class NextTurn : MonoBehaviour
 {
@@ -20,10 +21,15 @@ public class NextTurn : MonoBehaviour
     public int recordedPlayerPosition;
     public int intendedMonsterDirection;
     public Stack<Stack<Action>> monsterMove = new Stack<Stack<Action>>();
+    public List<int> playerDamagePositions = new List<int>();
+    public List<CardSlot> cardSlots;
+    public GameObject cardSlotsGameObject;
     Color nextTurnColor;
     // Start is called before the first frame update
     void Start()
     {
+        cardSlotsGameObject = GameObject.Find("Card Slots");
+        cardSlots = cardSlotsGameObject.GetComponent<CardSlots>().cardSlots;
         monsterMove.Push(new Stack<Action>());
         meshRenderer = gameObject.GetComponent<MeshRenderer>();
         player = GameObject.Find("Player").GetComponent<Player>();
@@ -70,18 +76,25 @@ public class NextTurn : MonoBehaviour
         {
             //new action
             actionEnd = turnNumber;
-            int randomAction = new System.Random().Next(0, 3);
+            // int randomAction = new System.Random().Next(0, 2);
+            int randomAction = 1;
+            playerDamagePositions.Clear();
             switch (randomAction)
             {
                 case 0:
                     monsterMove = new MonsterActions().ClawSwipe();
                     CountActions(monsterMove);
+                    playerDamagePositions.Add(monster.currentPosition + 1);
+                    playerDamagePositions.Add(monster.currentPosition);
+                    playerDamagePositions.Add(monster.currentPosition - 1);
                     break;
                 case 1:
                     monsterMove = new MonsterActions().Tackle();
                     CountActions(monsterMove);
                     recordedPlayerPosition = player.currentPosition;
                     intendedMonsterDirection = monster.currentPosition < player.currentPosition ? 1 : -1;
+                    playerDamagePositions.Add(monster.currentPosition + intendedMonsterDirection);
+                    playerDamagePositions.Add(monster.currentPosition + 2 * intendedMonsterDirection);
                     break;
                 case 2:
                     monsterMove = new MonsterActions().Tackle();
@@ -99,7 +112,33 @@ public class NextTurn : MonoBehaviour
         incomingTurn.monsterDirection = action.moveDeriction != 0 ? action.moveDeriction : intendedMonsterDirection;
         incomingTurn.monsterMove = action.moveDistance * incomingTurn.monsterDirection;
         monster.MoveMonster(incomingTurn.monsterMove);
-        player.DamagePlayer(action.damage);
+        if (action.damage == 0)
+        {
+            foreach (CardSlot cardSlot in cardSlots)
+            {
+                cardSlot.damageBorder.enabled = false;
+            }
+        }
+        else
+        {
+            foreach (CardSlot cardSlot in cardSlots)
+            {
+                foreach (int damagePosition in playerDamagePositions)
+                {
+                    if (cardSlot.cardPosition == damagePosition)
+                    {
+                        cardSlot.damageBorder.enabled = true;
+                    }
+                }
+            }
+        }
+        foreach (int damagePosition in playerDamagePositions)
+        {
+            if (player.currentPosition == damagePosition)
+            {
+                player.DamagePlayer(incomingTurn.playerDamage);
+            }
+        }
         turnNumber++;
     }
 
