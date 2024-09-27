@@ -12,7 +12,7 @@ public class Deck : MonoBehaviour
         cardSlots = GameObject.Find("Card Slots");
         foreach (Transform cardSlot in cardSlots.transform)
         {
-            cardSlot.GetChild(0).GetComponent<CardSlot>().SetCard(cards[Random.Range(0, cards.Length)]);
+            DealCard(cardSlot);
         }
     }
 
@@ -20,5 +20,11 @@ public class Deck : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void DealCard(Transform cardSlot)
+    {
+        Card card = cards[Random.Range(0, cards.Length)];
+        cardSlot.GetChild(0).GetComponent<CardSlot>().SetCard(card);
     }
 }

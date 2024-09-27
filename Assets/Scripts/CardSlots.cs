@@ -7,6 +7,8 @@ public class CardSlots : MonoBehaviour
 {
 
     public List<CardSlot> cardSlots = new List<CardSlot>();
+    public List<Card> cardsInField = new List<Card>();
+    public Deck deck;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,5 +28,12 @@ public class CardSlots : MonoBehaviour
         {
             cardSlot.DeselectCard();
         }
+    }
+
+    public void DiscardCard(Card card)
+    {
+        cardsInField.Remove(card);
+
+        deck.DealCard(card.transform.parent);
     }
 }

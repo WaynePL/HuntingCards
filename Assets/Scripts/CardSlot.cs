@@ -20,6 +20,14 @@ public class CardSlot : MonoBehaviour
     public GameObject player;
     public NextTurn nextTurn;
     public int cardPosition;
+
+    void Awake()
+    {
+        cardSlots = GameObject.Find("Card Slots").GetComponent<CardSlots>();
+        player = GameObject.Find("Player");
+        nextTurn = GameObject.Find("Next Turn Button").GetComponentInChildren<NextTurn>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,9 +36,9 @@ public class CardSlot : MonoBehaviour
         hoverBorder.enabled = false;
         selectedBorder.enabled = false;
         damageBorder.enabled = false;
-        player = GameObject.Find("Player");
-        cardSlots = GameObject.Find("Card Slots").GetComponent<CardSlots>();
-        nextTurn = GameObject.Find("Next Turn Button").GetComponentInChildren<NextTurn>();
+        
+        
+        
     }
 
     // Update is called once per frame
@@ -78,10 +86,21 @@ public class CardSlot : MonoBehaviour
     public void SetCard(Card card)
     {
         currentCard = card;
+        currentCard.SetLocation(Location.Field);
+        cardSlots.cardsInField.Add(currentCard);
         currentCard = GameObject.Instantiate(currentCard);
         currentCard.transform.parent = transform.GetChild(4).GetChild(0);
         currentCard.transform.localPosition = new Vector3(0, 0, -10);
         currentCard.transform.localScale = new Vector3(0.9f, 0.9f, 1);
+    }
+
+    public void DiscardCard()
+    {
+
+        cardSlots.cardsInField.Remove(currentCard);
+        Destroy(currentCard.gameObject);
+        currentCard.SetLocation(Location.Discard);
+        
     }
 
     string getDescription()
