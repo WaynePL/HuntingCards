@@ -7,6 +7,7 @@ using TMPro;
 using Palmmedia.ReportGenerator.Core.Common;
 using Unity.VisualScripting;
 using Unity.VisualScripting.ReorderableList;
+using UnityEditor.UI;
 
 public class CardSlot : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class CardSlot : MonoBehaviour
     TextMesh text;
     public MeshRenderer descriptionPane, hoverBorder, selectedBorder, damageBorder;
     public CardSlots cardSlots;
-    public Card currentCard;
+    public Card currentCard, cardPrefab;
     public bool isSelected = false;
     public int fontSize;
     public GameObject player;
@@ -75,6 +76,7 @@ public class CardSlot : MonoBehaviour
         isSelected = true;
         nextTurn.currentMonsterDamage = currentCard.damage;
         nextTurn.cardSelected = true;
+        nextTurn.selectedCardSlot = this;
     }
 
     public void DeselectCard()
@@ -85,23 +87,15 @@ public class CardSlot : MonoBehaviour
 
     public void SetCard(Card card)
     {
-        currentCard = card;
-        currentCard.SetLocation(Location.Field);
-        cardSlots.cardsInField.Add(currentCard);
-        currentCard = GameObject.Instantiate(currentCard);
+        cardPrefab = card;
+        currentCard = GameObject.Instantiate(cardPrefab);
+        currentCard.gameObject.SetActive(true);
         currentCard.transform.parent = transform.GetChild(4).GetChild(0);
         currentCard.transform.localPosition = new Vector3(0, 0, -10);
         currentCard.transform.localScale = new Vector3(0.9f, 0.9f, 1);
     }
 
-    public void DiscardCard()
-    {
-
-        cardSlots.cardsInField.Remove(currentCard);
-        Destroy(currentCard.gameObject);
-        currentCard.SetLocation(Location.Discard);
-        
-    }
+    
 
     string getDescription()
     {

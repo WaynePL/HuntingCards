@@ -25,6 +25,8 @@ public class NextTurn : MonoBehaviour
     public List<CardSlot> cardSlots;
     public GameObject cardSlotsGameObject;
     Color nextTurnColor;
+    public CardSlot selectedCardSlot;
+    public Deck deck;
     // Start is called before the first frame update
     void Start()
     {
@@ -53,19 +55,23 @@ public class NextTurn : MonoBehaviour
 
     void OnMouseEnter()
     {
-        meshRenderer.material.color = Color.green;
     }
 
     void OnMouseExit()
     {
-        meshRenderer.material.color = Color.white;
     }
 
     void OnMouseDown()
     {
 
         //player action
-
+        if (cardSelected)
+        {
+            cardSelected = false;
+            selectedCardSlot.DeselectCard();
+            deck.DiscardCard(selectedCardSlot);
+        }
+        
         //monster action
         Stack<Action> actions;
         if (monsterMove.Peek().Count == 0)

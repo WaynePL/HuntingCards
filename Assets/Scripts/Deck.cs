@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class Deck : MonoBehaviour
 {
-    public Card[] cards = new Card[0];
-    GameObject cardSlots;
+    public List<Card> playerDeck = new List<Card>();
+    public List<Card> cardsInDeck = new List<Card>();
+    public List<Card> cardsInField = new List<Card>();
+    public List<Card> cardsInDiscard = new List<Card>();
+
+    public CardSlots cardSlots;
     // Start is called before the first frame update
     void Start()
     {
-        cardSlots = GameObject.Find("Card Slots");
-        foreach (Transform cardSlot in cardSlots.transform)
+        cardsInDeck = playerDeck;
+        cardSlots = GameObject.Find("Card Slots").GetComponent<CardSlots>();
+        foreach (CardSlot cardSlot in cardSlots.cardSlots)
         {
             DealCard(cardSlot);
         }
@@ -22,9 +27,35 @@ public class Deck : MonoBehaviour
         
     }
 
-    public void DealCard(Transform cardSlot)
+    public void DealCard(CardSlot cardSlot)
     {
-        Card card = cards[Random.Range(0, cards.Length)];
-        cardSlot.GetChild(0).GetComponent<CardSlot>().SetCard(card);
+        if (cardsInDeck.Count == 0)
+        {
+            cardsInDeck = cardsInDiscard;
+            cardsInDiscard = new List<Card>();
+            foreach (Card newCard in cardsInDeck)
+            {
+                newCard.SetLocation(Location.Deck);
+            }
+        }
+        Card card = cardsInDeck[Random.Range(0, cardsInDeck.Count)];
+        cardSlot.SetCard(card);
+        cardsInDeck.Remove(card);
+        cardsInField.Add(card);
+        card.SetLocation(Location.Field);
+    }
+
+    public void DiscardCard(CardSlot cardSlot)
+    {
+
+        Card card = cardSlot.cardPrefab;
+        
+        cardsInField.Remove(card);
+        cardsInDiscard.Add(card);
+        card.SetLocation(Location.Discard);
+        Destroy(cardSlot.currentCard.gameObject);
+        DealCard(cardSlot);
+        
+        
     }
 }
