@@ -99,6 +99,7 @@ public class NextTurn : MonoBehaviour
                     CountActions(monsterMove);
                     recordedPlayerPosition = player.currentPosition;
                     intendedMonsterDirection = monster.currentPosition < player.currentPosition ? 1 : -1;
+                    playerDamagePositions.Add(monster.currentPosition);
                     playerDamagePositions.Add(monster.currentPosition + intendedMonsterDirection);
                     playerDamagePositions.Add(monster.currentPosition + 2 * intendedMonsterDirection);
                     break;
@@ -109,24 +110,6 @@ public class NextTurn : MonoBehaviour
                     intendedMonsterDirection = monster.currentPosition < player.currentPosition ? 1 : -1;
                     break;
             }
-        }
-
-        actions = monsterMove.Peek();
-       
-        Action action = actions.Pop();
-        incomingTurn.playerDamage = action.damage;
-        incomingTurn.monsterDirection = action.moveDeriction != 0 ? action.moveDeriction : intendedMonsterDirection;
-        incomingTurn.monsterMove = action.moveDistance * incomingTurn.monsterDirection;
-        monster.MoveMonster(incomingTurn.monsterMove);
-        if (action.damage == 0)
-        {
-            foreach (CardSlot cardSlot in cardSlots)
-            {
-                cardSlot.damageBorder.enabled = false;
-            }
-        }
-        else
-        {
             foreach (CardSlot cardSlot in cardSlots)
             {
                 foreach (int damagePosition in playerDamagePositions)
@@ -136,6 +119,22 @@ public class NextTurn : MonoBehaviour
                         cardSlot.damageBorder.enabled = true;
                     }
                 }
+            }
+        }
+        
+
+        actions = monsterMove.Peek();
+       
+        Action action = actions.Pop();
+        incomingTurn.playerDamage = action.damage;
+        incomingTurn.monsterDirection = action.moveDeriction != 0 ? action.moveDeriction : intendedMonsterDirection;
+        incomingTurn.monsterMove = action.moveDistance * incomingTurn.monsterDirection;
+        monster.MoveMonster(incomingTurn.monsterMove);
+        if (action.damage > 0)
+        {
+            foreach (CardSlot cardSlot in cardSlots)
+            {
+                cardSlot.damageBorder.enabled = false;
             }
         }
         foreach (int damagePosition in playerDamagePositions)

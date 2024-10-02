@@ -44,7 +44,6 @@ public class Deck : MonoBehaviour
         cardsInField.Add(card);
         card.SetLocation(Location.Field);
     }
-
     public void DiscardCard(CardSlot cardSlot)
     {
 
