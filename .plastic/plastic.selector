@@ -1,0 +1,4 @@
+repository "HuntingCards@WayneLivingston@cloud"
+  path "/"
+    br "/main"
+    co "/main"
