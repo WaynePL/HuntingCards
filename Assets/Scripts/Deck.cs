@@ -41,12 +41,18 @@ public class Deck : MonoBehaviour
         cardsInField.Add(card);
         card.SetLocation(Location.Field);
         GameObject cardObject = Instantiate(card.gameObject);
+        
+        cardObject.GetComponent<Card>().handPosition = handPosition;
         int cardPosition = (handPosition * -8) + 8;
         cardObject.transform.position = new Vector3(cardPosition, -15, -10);
     }
 
-    public void DiscardCard()
+    public void DiscardCard(Card discardedCard)
     {
-        
+        discardedCard.SetLocation(Location.Discard);
+        cardsInField.Remove(discardedCard);
+        cardsInDiscard.Add(discardedCard);
+        DealCard(discardedCard.handPosition);
+        discardedCard.gameObject.SetActive(false);
     }
 }

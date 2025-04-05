@@ -7,14 +7,14 @@ public class Card : MonoBehaviour
     public string description;
     public int damage;
     public Location location;
-
     public NextTurn nextTurn;
+    public int handPosition;
 
     void Start()
     {
         transform.GetChild(1).GetComponent<TextMesh>().text = damage.ToString();
         transform.GetChild(2).GetComponent<TextMesh>().text = gameObject.name;
-        nextTurn = GameObject.Find("Next Turn Button").GetComponent<NextTurn>();
+        nextTurn = GameObject.Find("Next Turn Button").GetComponentInChildren<NextTurn>();
     }   
 
     public void SetLocation(Location location)
@@ -27,7 +27,7 @@ public class Card : MonoBehaviour
         return location;
     }
 
-    void OMouseDown()
+    void OnMouseDown()
     {
         nextTurn.CardSelected(this);
     }

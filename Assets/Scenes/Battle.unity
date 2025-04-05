@@ -389,7 +389,7 @@ MonoBehaviour:
   - {fileID: 273677239}
   - {fileID: 792911127}
   currentPosition: 0
-  nextTurn: {fileID: 1868314572}
+  nextTurn: {fileID: 0}
 --- !u!114 &195173472
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2086,63 +2086,6 @@ Transform:
   - {fileID: 1934232975}
   m_Father: {fileID: 307401631}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1536587420
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 5663396992248729938, guid: d373d78252aa4eb448c0d11ff6cdc82e, type: 3}
-      propertyPath: m_Name
-      value: Defend
-      objectReference: {fileID: 0}
-    - target: {fileID: 7805390402555398327, guid: d373d78252aa4eb448c0d11ff6cdc82e, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -12.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7805390402555398327, guid: d373d78252aa4eb448c0d11ff6cdc82e, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -15.254424
-      objectReference: {fileID: 0}
-    - target: {fileID: 7805390402555398327, guid: d373d78252aa4eb448c0d11ff6cdc82e, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -13.58
-      objectReference: {fileID: 0}
-    - target: {fileID: 7805390402555398327, guid: d373d78252aa4eb448c0d11ff6cdc82e, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7805390402555398327, guid: d373d78252aa4eb448c0d11ff6cdc82e, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7805390402555398327, guid: d373d78252aa4eb448c0d11ff6cdc82e, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7805390402555398327, guid: d373d78252aa4eb448c0d11ff6cdc82e, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7805390402555398327, guid: d373d78252aa4eb448c0d11ff6cdc82e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7805390402555398327, guid: d373d78252aa4eb448c0d11ff6cdc82e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7805390402555398327, guid: d373d78252aa4eb448c0d11ff6cdc82e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: d373d78252aa4eb448c0d11ff6cdc82e, type: 3}
 --- !u!1 &1560493956
 GameObject:
   m_ObjectHideFlags: 0
@@ -2255,7 +2198,7 @@ GameObject:
   - component: {fileID: 1868314575}
   - component: {fileID: 1868314574}
   - component: {fileID: 1868314573}
-  - component: {fileID: 1868314572}
+  - component: {fileID: 1868314576}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -2278,33 +2221,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 723594150}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1868314572
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1868314570}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 224a2d76ec07cd34abfc1170cfdf906d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  turnNumber: 0
-  actionEnd: 0
-  monsterAction:
-    damage: 0
-  meshRenderer: {fileID: 1868314574}
-  player: {fileID: 316663078}
-  monster: {fileID: 195173471}
-  currentPlayerDamage: 10
-  currentMonsterDamage: 10
-  incomingTurn:
-    playerDamage: 0
-    monsterDamage: 0
-  cardSelected: 0
-  cardSlotsGameObject: {fileID: 0}
-  deck: {fileID: 935768535}
 --- !u!65 &1868314573
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2379,6 +2295,33 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1868314570}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1868314576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1868314570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 224a2d76ec07cd34abfc1170cfdf906d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  turnNumber: 0
+  actionEnd: 0
+  monsterAction:
+    damage: 0
+  meshRenderer: {fileID: 1868314574}
+  player: {fileID: 316663078}
+  monster: {fileID: 195173471}
+  currentPlayerDamage: 10
+  currentMonsterDamage: 10
+  incomingTurn:
+    playerDamage: 0
+    monsterDamage: 0
+  cardSelected: 0
+  deck: {fileID: 935768535}
+  selectedCard: {fileID: 0}
 --- !u!1 &1899084036
 GameObject:
   m_ObjectHideFlags: 0
@@ -2660,51 +2603,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2060660481}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &2072669540
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2072669541}
-  - component: {fileID: 2072669542}
-  m_Layer: 0
-  m_Name: Hand Slots
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2072669541
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2072669540}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.64, y: -16.17, z: -20}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2072669542
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2072669540}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38bd2e7210a82764a871e18d85b58943, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  deck: {fileID: 0}
 --- !u!1 &2106555707
 GameObject:
   m_ObjectHideFlags: 0
@@ -2786,7 +2684,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 963194228}
   - {fileID: 705507995}
-  - {fileID: 2072669541}
   - {fileID: 1770950219}
   - {fileID: 935768534}
   - {fileID: 1899084037}
@@ -2796,4 +2693,3 @@ SceneRoots:
   - {fileID: 723594150}
   - {fileID: 1560493957}
   - {fileID: 307401631}
-  - {fileID: 1536587420}

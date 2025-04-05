@@ -20,6 +20,7 @@ public class NextTurn : MonoBehaviour
     public bool cardSelected;
     Color nextTurnColor;
     public Deck deck;
+    public Card selectedCard;
     // Start is called before the first frame update
     void Start()
     {
@@ -58,10 +59,14 @@ public class NextTurn : MonoBehaviour
         if (cardSelected)
         {
             cardSelected = false;
-        }
+            
         
-        player.DamagePlayer(incomingTurn.playerDamage);
-        turnNumber++;
+            player.DamagePlayer(incomingTurn.damageToPlayer);
+            monster.DamageMonster(incomingTurn.damageToMonster);
+            deck.DiscardCard(selectedCard);
+            selectedCard = null;
+            turnNumber++;
+        }
     }
 
     private void CountActions( Stack<Stack<Action>> actions )
@@ -78,13 +83,18 @@ public class NextTurn : MonoBehaviour
     public void CardSelected(Card card)
     {
         cardSelected = true;
+        selectedCard = card;
+        if (card.damage > 0)
+        {
+            incomingTurn.damageToMonster = card.damage;
+        }
     }
 }
 
 [System.Serializable]
 public class Turn
 {
-    public int playerDamage = 0, monsterDamage = 0;
+    public int damageToPlayer = 0, damageToMonster = 0;
 }
 
 public class MonsterActions
