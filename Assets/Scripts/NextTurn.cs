@@ -18,13 +18,11 @@ public class NextTurn : MonoBehaviour
     public int currentMonsterDamage = 10;
     public Turn incomingTurn;
     public bool cardSelected;
-    public GameObject cardSlotsGameObject;
     Color nextTurnColor;
     public Deck deck;
     // Start is called before the first frame update
     void Start()
     {
-        cardSlotsGameObject = GameObject.Find("Card Slots");
         meshRenderer = gameObject.GetComponent<MeshRenderer>();
         player = GameObject.Find("Player").GetComponent<Player>();
         monster = GameObject.Find("Monster").GetComponent<Monster>();
@@ -75,6 +73,11 @@ public class NextTurn : MonoBehaviour
                 actionEnd = actionEnd + 1;
             }
         }
+    }
+
+    public void CardSelected(Card card)
+    {
+        cardSelected = true;
     }
 }
 
