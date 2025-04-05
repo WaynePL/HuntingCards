@@ -8,12 +8,14 @@ public class Deck : MonoBehaviour
     public List<Card> cardsInDeck = new List<Card>();
     public List<Card> cardsInField = new List<Card>();
     public List<Card> cardsInDiscard = new List<Card>();
-
-    public CardSlots cardSlots;
     // Start is called before the first frame update
     void Start()
     {
         cardsInDeck = playerDeck;
+        for (int i = 0; i < 5; i++)
+        {
+            DealCard(i);
+        }
 
     }
 
@@ -23,7 +25,7 @@ public class Deck : MonoBehaviour
         
     }
 
-    public void DealCard(CardSlot cardSlot)
+    public void DealCard(int handPosition)
     {
         if (cardsInDeck.Count == 0)
         {
@@ -35,22 +37,16 @@ public class Deck : MonoBehaviour
             }
         }
         Card card = cardsInDeck[Random.Range(0, cardsInDeck.Count)];
-        cardSlot.SetCard(card);
         cardsInDeck.Remove(card);
         cardsInField.Add(card);
         card.SetLocation(Location.Field);
+        GameObject cardObject = Instantiate(card.gameObject);
+        int cardPosition = (handPosition * -8) + 8;
+        cardObject.transform.position = new Vector3(cardPosition, -15, -10);
     }
-    public void DiscardCard(CardSlot cardSlot)
-    {
 
-        Card card = cardSlot.cardPrefab;
-        
-        cardsInField.Remove(card);
-        cardsInDiscard.Add(card);
-        card.SetLocation(Location.Discard);
-        Destroy(cardSlot.currentCard.gameObject);
-        DealCard(cardSlot);
-        
+    public void DiscardCard()
+    {
         
     }
 }

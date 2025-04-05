@@ -18,20 +18,13 @@ public class NextTurn : MonoBehaviour
     public int currentMonsterDamage = 10;
     public Turn incomingTurn;
     public bool cardSelected;
-    public int recordedPlayerPosition;
-    public int intendedMonsterDirection;
-    public Stack<Stack<Action>> monsterMove = new Stack<Stack<Action>>();
-    public List<int> playerDamagePositions = new List<int>();
-    public List<CardSlot> cardSlots;
     public GameObject cardSlotsGameObject;
     Color nextTurnColor;
-    public CardSlot selectedCardSlot;
     public Deck deck;
     // Start is called before the first frame update
     void Start()
     {
         cardSlotsGameObject = GameObject.Find("Card Slots");
-        monsterMove.Push(new Stack<Action>());
         meshRenderer = gameObject.GetComponent<MeshRenderer>();
         player = GameObject.Find("Player").GetComponent<Player>();
         monster = GameObject.Find("Monster").GetComponent<Monster>();
@@ -67,65 +60,8 @@ public class NextTurn : MonoBehaviour
         if (cardSelected)
         {
             cardSelected = false;
-            selectedCardSlot.DeselectCard();
-            deck.DiscardCard(selectedCardSlot);
         }
         
-        //monster action
-        Stack<Action> actions;
-        if (monsterMove.Peek().Count == 0)
-        {
-            monsterMove.Pop();
-        }
-        if (monsterMove.Count == 0)
-        {
-            //new action
-            actionEnd = turnNumber;
-            // int randomAction = new System.Random().Next(0, 2);
-            int randomAction = 1;
-            playerDamagePositions.Clear();
-            switch (randomAction)
-            {
-                case 0:
-                    monsterMove = new MonsterActions().ClawSwipe();
-                    CountActions(monsterMove);
-                    playerDamagePositions.Add(monster.currentPosition + 1);
-                    playerDamagePositions.Add(monster.currentPosition);
-                    playerDamagePositions.Add(monster.currentPosition - 1);
-                    break;
-                case 1:
-                    monsterMove = new MonsterActions().Tackle();
-                    CountActions(monsterMove);
-                    recordedPlayerPosition = player.currentPosition;
-                    intendedMonsterDirection = monster.currentPosition < player.currentPosition ? 1 : -1;
-                    playerDamagePositions.Add(monster.currentPosition);
-                    playerDamagePositions.Add(monster.currentPosition + intendedMonsterDirection);
-                    playerDamagePositions.Add(monster.currentPosition + 2 * intendedMonsterDirection);
-                    break;
-                case 2:
-                    monsterMove = new MonsterActions().Tackle();
-                    CountActions(monsterMove);
-                    recordedPlayerPosition = player.currentPosition;
-                    intendedMonsterDirection = monster.currentPosition < player.currentPosition ? 1 : -1;
-                    break;
-            }
-            foreach (CardSlot cardSlot in cardSlots)
-            {
-                foreach (int damagePosition in playerDamagePositions)
-                {
-                    if (cardSlot.cardPosition == damagePosition)
-                    {
-                        cardSlot.damageBorder.enabled = true;
-                    }
-                }
-            }
-        }
-        
-
-        actions = monsterMove.Peek();
-       
-        Action action = actions.Pop();
-        incomingTurn.playerDamage = action.damage;
         player.DamagePlayer(incomingTurn.playerDamage);
         turnNumber++;
     }
