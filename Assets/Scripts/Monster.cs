@@ -31,33 +31,6 @@ public class Monster : MonoBehaviour
         monsterHealth.TakeDamage(damage);
 
     }
-
-    public void MoveMonster(int move)
-    {
-        int intendedposition = currentPosition + move;
-        if (intendedposition >= 0 && intendedposition < 5)
-        {
-            currentPosition = intendedposition;
-        }
-        else if (intendedposition < 0)
-        {
-            currentPosition = 0;
-        }
-        else
-        {
-            currentPosition = 4;
-        }
-        transform.position = new Vector3(currentPosition * -6.5f, 6, -20);
-    }
-}
-
-public enum Slot
-{
-    Slot1 = 1,
-    Slot2 = 2,
-    Slot3 = 3,
-    Slot4 = 4,
-    Slot5 = 5
 }
 
 public class MonsterStats

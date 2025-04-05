@@ -14,11 +14,7 @@ public class Deck : MonoBehaviour
     void Start()
     {
         cardsInDeck = playerDeck;
-        cardSlots = GameObject.Find("Card Slots").GetComponent<CardSlots>();
-        foreach (CardSlot cardSlot in cardSlots.cardSlots)
-        {
-            DealCard(cardSlot);
-        }
+
     }
 
     // Update is called once per frame

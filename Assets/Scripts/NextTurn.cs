@@ -31,7 +31,6 @@ public class NextTurn : MonoBehaviour
     void Start()
     {
         cardSlotsGameObject = GameObject.Find("Card Slots");
-        cardSlots = cardSlotsGameObject.GetComponent<CardSlots>().cardSlots;
         monsterMove.Push(new Stack<Action>());
         meshRenderer = gameObject.GetComponent<MeshRenderer>();
         player = GameObject.Find("Player").GetComponent<Player>();
@@ -127,23 +126,7 @@ public class NextTurn : MonoBehaviour
        
         Action action = actions.Pop();
         incomingTurn.playerDamage = action.damage;
-        incomingTurn.monsterDirection = action.moveDeriction != 0 ? action.moveDeriction : intendedMonsterDirection;
-        incomingTurn.monsterMove = action.moveDistance * incomingTurn.monsterDirection;
-        monster.MoveMonster(incomingTurn.monsterMove);
-        if (action.damage > 0)
-        {
-            foreach (CardSlot cardSlot in cardSlots)
-            {
-                cardSlot.damageBorder.enabled = false;
-            }
-        }
-        foreach (int damagePosition in playerDamagePositions)
-        {
-            if (player.currentPosition == damagePosition)
-            {
-                player.DamagePlayer(incomingTurn.playerDamage);
-            }
-        }
+        player.DamagePlayer(incomingTurn.playerDamage);
         turnNumber++;
     }
 
@@ -163,8 +146,6 @@ public class NextTurn : MonoBehaviour
 public class Turn
 {
     public int playerDamage = 0, monsterDamage = 0;
-    public int monsterMove = 0;
-    public int monsterDirection = 0;
 }
 
 public class MonsterActions
@@ -174,7 +155,7 @@ public class MonsterActions
     {
         Stack<Stack<Action>> actionList = new Stack<Stack<Action>>();
         actionList.Push(Wait(2));
-        actionList.Push(Damage(10));
+        actionList.Push(Damage(20));
         actionList.Push(Wait(1));
         return actionList;
     }
@@ -184,7 +165,7 @@ public class MonsterActions
     {
         Stack<Stack<Action>> actionList = new Stack<Stack<Action>>();
         actionList.Push(Wait(1));
-        actionList.Push(Move(2, 0, 10));
+        actionList.Push(Damage(10));
         actionList.Push(Wait(3));
         return actionList;
     }
@@ -194,37 +175,27 @@ public class MonsterActions
         Stack<Action> actions = new Stack<Action>();
         for (int i = 0; i < length; i++)
         {
-            actions.Push(new Action(0, 0, 0));
+            actions.Push(new Action(0));
         }   
         return actions;
     }
     public Stack<Action> Damage(int damage)
     {
         Stack<Action> actions = new Stack<Action>();
-        actions.Push(new Action(0, 0, damage));
+        actions.Push(new Action(damage));
 
         return actions;
 
     }
 
-    public Stack<Action> Move(int moveDistance, int moveDeriction, int damage)
-    {
-        Stack<Action> actions = new Stack<Action>();
-        actions.Push(new Action(moveDistance, moveDeriction, damage));
-        return actions;
-    }
 }
 [System.Serializable]
 public class Action
 {
-    public int moveDistance;
-    public int moveDeriction;
     public int damage;
 
-    public Action(int moveDistance, int moveDeriction, int damage)
+    public Action( int damage)
     {
-        this.moveDistance = moveDistance;
-        this.moveDeriction = moveDeriction;
         this.damage = damage;
     }
 }

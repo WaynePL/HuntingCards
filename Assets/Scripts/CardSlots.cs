@@ -6,7 +6,6 @@ using UnityEngine;
 public class CardSlots : MonoBehaviour
 {
 
-    public List<CardSlot> cardSlots = new List<CardSlot>();
     public Deck deck;
     // Start is called before the first frame update
     void Start()
@@ -20,12 +19,4 @@ public class CardSlots : MonoBehaviour
         
     }
 
-    public void DeselectCards()
-    {
-        cardSlots = GetComponentsInChildren<CardSlot>().ToList();
-        foreach ( CardSlot cardSlot in cardSlots )
-        {
-            cardSlot.DeselectCard();
-        }
-    }
 }
