@@ -41,7 +41,7 @@ public class Deck : MonoBehaviour
         cardsInField.Add(card);
         card.SetLocation(Location.Field);
         GameObject cardObject = Instantiate(card.gameObject);
-        
+
         cardObject.GetComponent<Card>().handPosition = handPosition;
         int cardPosition = (handPosition * -8) + 8;
         cardObject.transform.position = new Vector3(cardPosition, -15, -10);

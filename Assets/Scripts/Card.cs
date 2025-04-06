@@ -9,7 +9,6 @@ public class Card : MonoBehaviour
     public Location location;
     public NextTurn nextTurn;
     public int handPosition;
-
     void Start()
     {
         transform.GetChild(1).GetComponent<TextMesh>().text = damage.ToString();
@@ -29,7 +28,17 @@ public class Card : MonoBehaviour
 
     void OnMouseDown()
     {
+        if (nextTurn.cardSelected) 
+        {
+            nextTurn.selectedCard.DeselectCard();
+        }
         nextTurn.CardSelected(this);
+        transform.position = new Vector3(transform.position.x, -17, transform.position.z);
+    }
+
+    public void DeselectCard()
+    {
+        transform.position = new Vector3(transform.position.x, -15, transform.position.z);
     }
 
 }
