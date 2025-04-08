@@ -11,7 +11,10 @@ public class Deck : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        cardsInDeck = playerDeck;
+        foreach (Card card in playerDeck)
+        {
+            cardsInDeck.Add(card);
+        }
         for (int i = 0; i < 5; i++)
         {
             DealCard(i);
@@ -37,14 +40,14 @@ public class Deck : MonoBehaviour
             }
         }
         Card card = cardsInDeck[Random.Range(0, cardsInDeck.Count)];
-        cardsInDeck.Remove(card);
         cardsInField.Add(card);
+        cardsInDeck.Remove(card);
         card.SetLocation(Location.Field);
         GameObject cardObject = Instantiate(card.gameObject);
 
         cardObject.GetComponent<Card>().handPosition = handPosition;
         int cardPosition = (handPosition * -8) + 8;
-        cardObject.transform.position = new Vector3(cardPosition, -15, -10);
+        cardObject.transform.position = new Vector3(cardPosition, -17, -10);
     }
 
     public void DiscardCard(Card discardedCard)
