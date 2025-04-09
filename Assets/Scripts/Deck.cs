@@ -62,4 +62,39 @@ public class Deck : MonoBehaviour
             }
         }
     }
+
+    public void ChangeDeck(List<Card> newDeck)
+    {
+        foreach (Card card in cardsInField)
+        {
+            Destroy(card.gameObject);
+        }
+        cardsInField.Clear();
+        foreach (Card card in cardsInDiscard)
+        {
+            Destroy(card.gameObject);
+        }
+        cardsInDiscard.Clear();
+        foreach (Card card in cardsInDeck)
+        {
+            Destroy(card.gameObject);
+        }
+        cardsInDeck.Clear();
+        foreach (Card card in newDeck)
+        {
+            GameObject cardObject = Instantiate(card.gameObject);
+            cardsInDeck.Add(cardObject.GetComponent<Card>());
+            cardObject.SetActive(false);
+        }
+        foreach (Card card in playerDeck)
+        {
+            GameObject cardObject = Instantiate(card.gameObject);
+            cardsInDeck.Add(cardObject.GetComponent<Card>());
+            cardObject.SetActive(false);
+        }
+        for (int i = 0; i < 5; i++)
+        {
+            DealCard(i);
+        }
+    }
 }
