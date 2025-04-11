@@ -29,6 +29,10 @@ public class Player : MonoBehaviour
     {
         playerHealth.TakeDamage(damage);
     }
+    public void HealPlayer(int heal)
+    {
+        playerHealth.Heal(heal);
+    }
 }
 
 public class PlayerStats

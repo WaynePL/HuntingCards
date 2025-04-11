@@ -19,4 +19,9 @@ public class Health : MonoBehaviour
         curHealth -= damage;
         healthBar.SetHealth(curHealth);
     }
+    public void Heal(int heal)
+    {
+        curHealth = (curHealth + heal > maxHealth) ? maxHealth : curHealth + heal;
+        healthBar.SetHealth(curHealth);
+    }
 }

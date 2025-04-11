@@ -937,6 +937,7 @@ GameObject:
   - component: {fileID: 611090808}
   - component: {fileID: 611090807}
   - component: {fileID: 611090806}
+  - component: {fileID: 611090809}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -1033,6 +1034,27 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 611090804}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &611090809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 611090804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97a1d05e607e23448b4fce87c7c380db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardsInDeck:
+  - {fileID: 6172396445819938861, guid: fe6b8af075f67be4fa0b8c822c7c7adc, type: 3}
+  - {fileID: 6172396445819938861, guid: fe6b8af075f67be4fa0b8c822c7c7adc, type: 3}
+  - {fileID: 6172396445819938861, guid: fe6b8af075f67be4fa0b8c822c7c7adc, type: 3}
+  - {fileID: 6172396445819938861, guid: fe6b8af075f67be4fa0b8c822c7c7adc, type: 3}
+  - {fileID: 6172396445819938861, guid: fe6b8af075f67be4fa0b8c822c7c7adc, type: 3}
+  - {fileID: 6172396445819938861, guid: fe6b8af075f67be4fa0b8c822c7c7adc, type: 3}
+  - {fileID: 6172396445819938861, guid: fe6b8af075f67be4fa0b8c822c7c7adc, type: 3}
+  deck: {fileID: 935768535}
 --- !u!1 &680758377
 GameObject:
   m_ObjectHideFlags: 0

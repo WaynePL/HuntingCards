@@ -249,9 +249,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   description: Potion heals 20 HP
+  cardName: 
   damage: 0
+  heal: 20
   location: 1
   nextTurn: {fileID: 0}
+  handPosition: 0
 --- !u!65 &-2716593426443352787
 BoxCollider:
   m_ObjectHideFlags: 0

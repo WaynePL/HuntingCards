@@ -6,6 +6,7 @@ public class Card : MonoBehaviour
 {
     public string description, cardName;
     public int damage;
+    public int heal;
     public Location location;
     public NextTurn nextTurn;
     public int handPosition;

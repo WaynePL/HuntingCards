@@ -63,20 +63,10 @@ public class NextTurn : MonoBehaviour
         
             player.DamagePlayer(incomingTurn.damageToPlayer);
             monster.DamageMonster(incomingTurn.damageToMonster);
+            player.HealPlayer(incomingTurn.healtoPlayer);
             deck.DiscardCard(selectedCard);
             selectedCard = null;
             turnNumber++;
-        }
-    }
-
-    private void CountActions( Stack<Stack<Action>> actions )
-    {
-        foreach (Stack<Action> newActions in actions)
-        {
-            foreach (Action action in newActions)
-            {
-                actionEnd = actionEnd + 1;
-            }
         }
     }
 
@@ -88,13 +78,16 @@ public class NextTurn : MonoBehaviour
         {
             incomingTurn.damageToMonster = card.damage;
         }
+        incomingTurn.healtoPlayer = card.heal > 0 ? card.heal : 0;
+        
+        incomingTurn.damageToPlayer = (turnNumber % 2 == 0) ? 0 : 10;
     }
 }
 
 [System.Serializable]
 public class Turn
 {
-    public int damageToPlayer = 0, damageToMonster = 0;
+    public int damageToPlayer = 0, damageToMonster = 0, healtoPlayer = 0;
 }
 
 public class MonsterActions
