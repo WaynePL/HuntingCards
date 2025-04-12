@@ -12,6 +12,8 @@ public class Monster : MonoBehaviour
     public Transform[] moveSlots;
     public int currentPosition;
     public NextTurn nextTurn;
+    public Deck deck;
+    public int currentArea = 1;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +31,10 @@ public class Monster : MonoBehaviour
     public void DamageMonster(int damage)
     {
         monsterHealth.TakeDamage(damage);
+
+    }
+    public void runAway()
+    {
 
     }
 }

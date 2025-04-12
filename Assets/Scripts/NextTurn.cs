@@ -72,15 +72,23 @@ public class NextTurn : MonoBehaviour
 
     public void CardSelected(Card card)
     {
-        cardSelected = true;
-        selectedCard = card;
-        if (card.damage > 0)
+        if (card)
         {
-            incomingTurn.damageToMonster = card.damage;
+            cardSelected = true;
+            selectedCard = card;
+            if (card.damage > 0)
+            {
+                incomingTurn.damageToMonster = card.damage;
+            }
+            incomingTurn.healtoPlayer = card.heal > 0 ? card.heal : 0;
+            
+            incomingTurn.damageToPlayer = (turnNumber % 2 == 0) ? 0 : 10;
         }
-        incomingTurn.healtoPlayer = card.heal > 0 ? card.heal : 0;
-        
-        incomingTurn.damageToPlayer = (turnNumber % 2 == 0) ? 0 : 10;
+        else
+        {
+            cardSelected = false;
+            selectedCard = null;
+        }
     }
 }
 
@@ -88,56 +96,4 @@ public class NextTurn : MonoBehaviour
 public class Turn
 {
     public int damageToPlayer = 0, damageToMonster = 0, healtoPlayer = 0;
-}
-
-public class MonsterActions
-{
-
-    public Stack<Stack<Action>> ClawSwipe()
-    {
-        Stack<Stack<Action>> actionList = new Stack<Stack<Action>>();
-        actionList.Push(Wait(2));
-        actionList.Push(Damage(20));
-        actionList.Push(Wait(1));
-        return actionList;
-    }
-
-
-    public Stack<Stack<Action>> Tackle()
-    {
-        Stack<Stack<Action>> actionList = new Stack<Stack<Action>>();
-        actionList.Push(Wait(1));
-        actionList.Push(Damage(10));
-        actionList.Push(Wait(3));
-        return actionList;
-    }
-
-    private Stack<Action> Wait(int length)
-    {
-        Stack<Action> actions = new Stack<Action>();
-        for (int i = 0; i < length; i++)
-        {
-            actions.Push(new Action(0));
-        }   
-        return actions;
-    }
-    public Stack<Action> Damage(int damage)
-    {
-        Stack<Action> actions = new Stack<Action>();
-        actions.Push(new Action(damage));
-
-        return actions;
-
-    }
-
-}
-[System.Serializable]
-public class Action
-{
-    public int damage;
-
-    public Action( int damage)
-    {
-        this.damage = damage;
-    }
 }

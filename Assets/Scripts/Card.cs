@@ -31,10 +31,23 @@ public class Card : MonoBehaviour
     {
         if (nextTurn.cardSelected) 
         {
-            nextTurn.selectedCard.DeselectCard();
+            if (nextTurn.selectedCard != this)
+            {
+                nextTurn.selectedCard.DeselectCard();
+                nextTurn.CardSelected(this);
+                transform.position = new Vector3(transform.position.x, -15, transform.position.z);
+            }
+            else
+            {
+                nextTurn.CardSelected(null);
+                DeselectCard();
+            }
         }
-        nextTurn.CardSelected(this);
-        transform.position = new Vector3(transform.position.x, -15, transform.position.z);
+        else
+        {
+            nextTurn.CardSelected(this);
+            transform.position = new Vector3(transform.position.x, -15, transform.position.z);
+        }
     }
 
     public void DeselectCard()

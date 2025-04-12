@@ -5,12 +5,22 @@ using UnityEngine;
 public class Deck : MonoBehaviour
 {
     public List<Card> playerDeck = new List<Card>();
+    public List<Card> currentAreaDeck = new List<Card>();
     public List<Card> cardsInDeck = new List<Card>();
     public List<Card> cardsInField = new List<Card>();
     public List<Card> cardsInDiscard = new List<Card>();
+    public int currentArea = 1;
+    public Monster monster;
+    public NextTurn nextTurn;
     // Start is called before the first frame update
     void Start()
     {
+        foreach (Card card in currentAreaDeck)
+        {
+            GameObject cardObject = Instantiate(card.gameObject);
+            cardsInDeck.Add(cardObject.GetComponent<Card>());
+            cardObject.SetActive(false);
+        }
         foreach (Card card in playerDeck)
         {
             GameObject cardObject = Instantiate(card.gameObject);
@@ -63,8 +73,9 @@ public class Deck : MonoBehaviour
         }
     }
 
-    public void ChangeDeck(List<Card> newDeck)
+    public void ChangeDeck(AreaDeck areaDeck)
     {
+        nextTurn.CardSelected(null);
         foreach (Card card in cardsInField)
         {
             Destroy(card.gameObject);
@@ -80,7 +91,20 @@ public class Deck : MonoBehaviour
             Destroy(card.gameObject);
         }
         cardsInDeck.Clear();
-        foreach (Card card in newDeck)
+
+        List<Card> tempDeck = areaDeck.cardsInDeck;
+        areaDeck.cardsInDeck = currentAreaDeck;
+        currentAreaDeck = tempDeck;
+
+        if (monster.currentArea != currentArea)
+        {
+            monster.gameObject.SetActive(false);
+        }
+        else
+        {
+            monster.gameObject.SetActive(true);
+        }
+        foreach (Card card in currentAreaDeck)
         {
             GameObject cardObject = Instantiate(card.gameObject);
             cardsInDeck.Add(cardObject.GetComponent<Card>());
