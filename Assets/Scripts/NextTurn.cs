@@ -67,6 +67,13 @@ public class NextTurn : MonoBehaviour
             deck.DiscardCard(selectedCard);
             selectedCard = null;
             turnNumber++;
+            transform.GetComponentInChildren<TextMesh>().text = "Turn Number: " + turnNumber.ToString();
+            if (turnNumber % 5 == 0) monster.runAway();
+            if (monster.currentArea != deck.currentArea)
+            {
+                monster.gameObject.SetActive(false);
+            }
+        
         }
     }
 

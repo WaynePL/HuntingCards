@@ -35,7 +35,9 @@ public class Monster : MonoBehaviour
     }
     public void runAway()
     {
-
+        
+        currentArea = Random.Range(1, 5);
+        
     }
 }
 
