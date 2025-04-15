@@ -18,9 +18,11 @@ public class NextTurn : MonoBehaviour
     public int currentMonsterDamage = 10;
     public Turn incomingTurn;
     public bool cardSelected;
+    public bool actionSelected;
     Color nextTurnColor;
     public Deck deck;
     public Card selectedCard;
+    public Action selectedAction;
     // Start is called before the first frame update
     void Start()
     {
@@ -56,16 +58,25 @@ public class NextTurn : MonoBehaviour
     {
 
         //player action
-        if (cardSelected)
+        if (cardSelected || actionSelected)
         {
             cardSelected = false;
+            actionSelected = false;
             
         
             player.DamagePlayer(incomingTurn.damageToPlayer);
             monster.DamageMonster(incomingTurn.damageToMonster);
             player.HealPlayer(incomingTurn.healtoPlayer);
-            deck.DiscardCard(selectedCard);
-            selectedCard = null;
+            if (cardSelected) 
+            {
+                deck.DiscardCard(selectedCard);
+                selectedCard = null;
+            }
+            if (actionSelected)
+            {
+                selectedAction.DeselectAction();
+                selectedAction = null;
+            }
             turnNumber++;
             transform.GetComponentInChildren<TextMesh>().text = "Turn Number: " + turnNumber.ToString();
             if (turnNumber % 5 == 0) monster.runAway();
@@ -83,24 +94,49 @@ public class NextTurn : MonoBehaviour
         {
             cardSelected = true;
             selectedCard = card;
+            ActionSelected(null);
             if (card.damage > 0)
             {
                 incomingTurn.damageToMonster = card.damage;
             }
             incomingTurn.healtoPlayer = card.heal > 0 ? card.heal : 0;
-            
-            incomingTurn.damageToPlayer = (turnNumber % 2 == 0) ? 0 : 10;
         }
         else
         {
             cardSelected = false;
-            selectedCard = null;
+            if (selectedCard)
+            {
+                selectedCard.DeselectCard();
+                selectedCard = null;
+            }
+        }
+    }
+
+    public void ActionSelected(Action action)
+    {
+        
+        if (action)
+        {
+            actionSelected = true;
+
+            selectedAction = action;
+            incomingTurn.damageToMonster = action.damage;
+            incomingTurn.staminaUsed = action.staminaCost;
+
+        }
+        else
+        {
+            actionSelected = false;
+            if (selectedAction)
+            {
+                selectedAction.DeselectAction();
+                selectedAction = null;
+            }
         }
     }
 }
-
-[System.Serializable]
+[Serializable]
 public class Turn
 {
-    public int damageToPlayer = 0, damageToMonster = 0, healtoPlayer = 0;
+    public int damageToPlayer = 0, damageToMonster = 0, healtoPlayer = 0, staminaUsed = 0;
 }

@@ -29,9 +29,9 @@ public class Card : MonoBehaviour
 
     void OnMouseDown()
     {
-        if (nextTurn.cardSelected) 
+        if (nextTurn.cardSelected || nextTurn.actionSelected) 
         {
-            if (nextTurn.selectedCard != this)
+            if (nextTurn.cardSelected && nextTurn.selectedCard != this)
             {
                 nextTurn.selectedCard.DeselectCard();
                 nextTurn.CardSelected(this);
@@ -41,6 +41,12 @@ public class Card : MonoBehaviour
             {
                 nextTurn.CardSelected(null);
                 DeselectCard();
+            }
+            if (nextTurn.selectedAction != null)
+            {
+                nextTurn.ActionSelected(null);
+                nextTurn.CardSelected(this);
+                transform.position = new Vector3(transform.position.x, -5, transform.position.z);
             }
         }
         else
