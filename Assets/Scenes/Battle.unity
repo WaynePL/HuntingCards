@@ -786,7 +786,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0907badad6802224d82b3e6a31eb6224, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curStamina: 0
+  curStamina: 100
   maxStamina: 100
   staminaBar: {fileID: 421117422}
 --- !u!1 &334419971
