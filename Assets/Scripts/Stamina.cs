@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 public class Stamina : MonoBehaviour
 {
-    public int curStamina = 0;
+    public int curStamina = 100;
     public int maxStamina = 100;
-    public StaminaBar healthBar;
+    public StaminaBar staminaBar;
     void Start()
     {
 
@@ -14,14 +14,14 @@ public class Stamina : MonoBehaviour
     {
         
     }
-    public void Tire(int damage)
+    public void Tire(int stamina)
     {
-        curStamina -= damage;
-        healthBar.SetStamina(curStamina);
+        curStamina -= stamina;
+        staminaBar.SetStamina(curStamina);
     }
     public void Rest(int rest)
     {
         curStamina = (curStamina + rest > maxStamina) ? maxStamina : curStamina + rest;
-        healthBar.SetStamina(curStamina);
+        staminaBar.SetStamina(curStamina);
     }
 }

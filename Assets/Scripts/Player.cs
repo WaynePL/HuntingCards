@@ -40,9 +40,9 @@ public class Player : MonoBehaviour
         playerHealth.Heal(heal);
     }
 
-    public void TirePlayer(int damage)
+    public void TirePlayer(int stamina)
     {
-        playerStamina.Tire(damage);
+        playerStamina.Tire(stamina);
     }
 
     public void RestPlayer(int rest)

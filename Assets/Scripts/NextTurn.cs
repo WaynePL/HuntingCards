@@ -35,7 +35,7 @@ public class NextTurn : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (cardSelected)
+        if (cardSelected || actionSelected)
         {
             nextTurnColor.a = 1f;
         }
@@ -60,20 +60,21 @@ public class NextTurn : MonoBehaviour
         //player action
         if (cardSelected || actionSelected)
         {
-            cardSelected = false;
-            actionSelected = false;
             
         
             player.DamagePlayer(incomingTurn.damageToPlayer);
             monster.DamageMonster(incomingTurn.damageToMonster);
             player.HealPlayer(incomingTurn.healtoPlayer);
+            player.TirePlayer(incomingTurn.staminaUsed);
             if (cardSelected) 
             {
+                cardSelected = false;
                 deck.DiscardCard(selectedCard);
                 selectedCard = null;
             }
             if (actionSelected)
             {
+                actionSelected = false;
                 selectedAction.DeselectAction();
                 selectedAction = null;
             }
