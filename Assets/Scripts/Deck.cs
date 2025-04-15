@@ -50,8 +50,8 @@ public class Deck : MonoBehaviour
         card.SetLocation(Location.Field);
 
         card.handPosition = handPosition;
-        int cardPosition = (handPosition * -8) + 8;
-        card.gameObject.transform.position = new Vector3(cardPosition, -17, -10);
+        int cardPosition = (handPosition * -8) + 6;
+        card.gameObject.transform.position = new Vector3(cardPosition, -7, -10);
         card.gameObject.SetActive(true);
     }
 

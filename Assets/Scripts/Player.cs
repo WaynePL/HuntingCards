@@ -9,8 +9,10 @@ public class Player : MonoBehaviour
 {
     public PlayerStats playerStats = new PlayerStats();
     public HealthBar playerHealthBar;
-    public Card currentCard;
     public Health playerHealth;
+    public StaminaBar playerStaminaBar;
+    public Stamina playerStamina;
+    public Card currentCard;
     public int currentPosition;
 
     // Start is called before the first frame update
@@ -37,6 +39,17 @@ public class Player : MonoBehaviour
     {
         playerHealth.Heal(heal);
     }
+
+    public void TirePlayer(int damage)
+    {
+        playerStamina.Tire(damage);
+    }
+
+    public void RestPlayer(int rest)
+    {
+        playerStamina.Rest(rest);
+    }
+    
 }
 
 public class PlayerStats

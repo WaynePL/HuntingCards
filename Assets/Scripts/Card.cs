@@ -35,7 +35,7 @@ public class Card : MonoBehaviour
             {
                 nextTurn.selectedCard.DeselectCard();
                 nextTurn.CardSelected(this);
-                transform.position = new Vector3(transform.position.x, -15, transform.position.z);
+                transform.position = new Vector3(transform.position.x, -5, transform.position.z);
             }
             else
             {
@@ -46,13 +46,13 @@ public class Card : MonoBehaviour
         else
         {
             nextTurn.CardSelected(this);
-            transform.position = new Vector3(transform.position.x, -15, transform.position.z);
+            transform.position = new Vector3(transform.position.x, -5, transform.position.z);
         }
     }
 
     public void DeselectCard()
     {
-        transform.position = new Vector3(transform.position.x, -17, transform.position.z);
+        transform.position = new Vector3(transform.position.x, -7, transform.position.z);
     }
 
 }
