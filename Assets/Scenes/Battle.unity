@@ -1860,10 +1860,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a250c3f65dcfe06439db24684e22cd0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  staminaCost: 0
-  damage: 0
+  time: 1
   actionName: 
   description: 
+  staminaCost: 0
+  damage: 0
   nextTurn: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
@@ -4886,10 +4887,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a250c3f65dcfe06439db24684e22cd0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  staminaCost: 15
-  damage: 15
+  time: 3
   actionName: Heavy Attack
   description: 
+  staminaCost: 15
+  damage: 15
   nextTurn: {fileID: 1868314576}
 --- !u!65 &5150278303434020422
 BoxCollider:
@@ -4924,10 +4926,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a250c3f65dcfe06439db24684e22cd0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  staminaCost: 10
-  damage: 10
+  time: 2
   actionName: Light Attack
   description: 
+  staminaCost: 10
+  damage: 10
   nextTurn: {fileID: 1868314576}
 --- !u!23 &5150731195780128235
 MeshRenderer:
@@ -5331,10 +5334,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a250c3f65dcfe06439db24684e22cd0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  staminaCost: 0
-  damage: 0
+  time: 2
   actionName: 
   description: 
+  staminaCost: 0
+  damage: 0
   nextTurn: {fileID: 0}
 --- !u!1 &9056483030329144662
 GameObject:
