@@ -23,6 +23,7 @@ public class NextTurn : MonoBehaviour
     public Deck deck;
     public Card selectedCard;
     public Action selectedAction;
+    GameObject actionObject;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +31,7 @@ public class NextTurn : MonoBehaviour
         player = GameObject.Find("Player").GetComponent<Player>();
         monster = GameObject.Find("Monster").GetComponent<Monster>();
         nextTurnColor = meshRenderer.material.color;
+        actionObject = new GameObject("Action");
     }
 
     // Update is called once per frame
@@ -66,19 +68,24 @@ public class NextTurn : MonoBehaviour
             monster.DamageMonster(incomingTurn.damageToMonster);
             player.HealPlayer(incomingTurn.healtoPlayer);
             player.TirePlayer(incomingTurn.staminaUsed);
+            int totalTurns = 0;
             if (cardSelected) 
             {
+                totalTurns = selectedCard.time;
                 cardSelected = false;
                 deck.DiscardCard(selectedCard);
                 selectedCard = null;
+
             }
             if (actionSelected)
             {
+                totalTurns = selectedAction.time;
                 actionSelected = false;
                 selectedAction.DeselectAction();
                 selectedAction = null;
             }
-            turnNumber++;
+            UnsetAction();
+            turnNumber += totalTurns;
             transform.GetComponentInChildren<TextMesh>().text = "Turn Number: " + turnNumber.ToString();
             if (turnNumber % 5 == 0) monster.runAway();
             if (monster.currentArea != deck.currentArea)
@@ -101,6 +108,8 @@ public class NextTurn : MonoBehaviour
                 incomingTurn.damageToMonster = card.damage;
             }
             incomingTurn.healtoPlayer = card.heal > 0 ? card.heal : 0;
+            SetAction(card);
+
         }
         else
         {
@@ -123,6 +132,7 @@ public class NextTurn : MonoBehaviour
             selectedAction = action;
             incomingTurn.damageToMonster = action.damage;
             incomingTurn.staminaUsed = action.staminaCost;
+            SetAction(action);
 
         }
         else
@@ -134,6 +144,25 @@ public class NextTurn : MonoBehaviour
                 selectedAction = null;
             }
         }
+
+    }
+
+    private void SetAction(BaseAction baseAction)
+    {
+        GameObject actionObjectText = new GameObject();
+        actionObjectText.transform.parent = actionObject.transform;
+        actionObjectText.transform.position = new Vector3(player.transform.position.x - 10, player.transform.position.y + 2, player.transform.position.z);
+        actionObjectText.AddComponent<MeshRenderer>();
+        actionObjectText.AddComponent<TextMesh>();
+        actionObjectText.GetComponent<TextMesh>().text = baseAction.name + " " + baseAction.time;
+        actionObjectText.GetComponent<TextMesh>().color = Color.black;
+        actionObjectText.GetComponent<TextMesh>().fontSize = 30;
+        actionObjectText.transform.localScale *= 0.4f;
+    }
+
+    public void UnsetAction()
+    {
+        Destroy(actionObject.transform.GetChild(0).gameObject);
     }
 }
 [Serializable]

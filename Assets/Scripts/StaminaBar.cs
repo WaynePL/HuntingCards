@@ -12,8 +12,8 @@ public class StaminaBar : MonoBehaviour
         staminaBar.maxValue = stamina.maxStamina;
         staminaBar.value = stamina.maxStamina;
     }
-    public void SetStamina(int hp)
+    public void SetStamina(int sp)
     {
-        staminaBar.value = hp;
+        staminaBar.value = sp;
     }
 }

@@ -248,8 +248,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1b9bf830ada33044ae7ea6e9630aba4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  description: Light attack does 10 damage
-  damage: 10
+  time: 5
+  actionName: Herbs
+  description: Craft herbs into a potion
+  damage: 0
+  heal: 0
   location: 1
   nextTurn: {fileID: 0}
   handPosition: 0

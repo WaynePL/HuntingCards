@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Card : MonoBehaviour
+public class Card : BaseAction
 {
-    public string description, cardName;
     public int damage;
     public int heal;
     public Location location;
@@ -13,7 +12,7 @@ public class Card : MonoBehaviour
     void Start()
     {
         transform.GetChild(1).GetComponent<TextMesh>().text = damage.ToString();
-        transform.GetChild(2).GetComponent<TextMesh>().text = gameObject.name;
+        transform.GetChild(2).GetComponent<TextMesh>().text = actionName;
         nextTurn = GameObject.Find("Next Turn Button").GetComponentInChildren<NextTurn>();
     }   
 
@@ -59,6 +58,7 @@ public class Card : MonoBehaviour
     public void DeselectCard()
     {
         transform.position = new Vector3(transform.position.x, -7, transform.position.z);
+        nextTurn.UnsetAction();
     }
 
 }
