@@ -507,12 +507,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 1211269333}
   monsterHealth: {fileID: 195173472}
-  moveSlots:
-  - {fileID: 1310831191}
-  - {fileID: 2008181722}
-  - {fileID: 864652593}
-  - {fileID: 273677239}
-  - {fileID: 792911127}
   currentPosition: 0
   nextTurn: {fileID: 0}
   deck: {fileID: 935768535}
@@ -1865,7 +1859,7 @@ MonoBehaviour:
   description: 
   staminaCost: 0
   damage: 0
-  nextTurn: {fileID: 0}
+  nextTurn: {fileID: 1868314576}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -5339,7 +5333,7 @@ MonoBehaviour:
   description: 
   staminaCost: 0
   damage: 0
-  nextTurn: {fileID: 0}
+  nextTurn: {fileID: 1868314576}
 --- !u!1 &9056483030329144662
 GameObject:
   m_ObjectHideFlags: 0

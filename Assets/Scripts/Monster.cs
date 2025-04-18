@@ -9,7 +9,6 @@ public class Monster : MonoBehaviour
     public HealthBar healthBar;
     public MonsterStats monsterStats = new MonsterStats();
     public Health monsterHealth;
-    public Transform[] moveSlots;
     public int currentPosition;
     public NextTurn nextTurn;
     public Deck deck;

@@ -37,15 +37,7 @@ public class NextTurn : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (cardSelected || actionSelected)
-        {
-            nextTurnColor.a = 1f;
-        }
-        else 
-        {
-            nextTurnColor.a = 0.5f;   
-        }
-        meshRenderer.material.color = nextTurnColor;
+
     }
 
     void OnMouseEnter()
@@ -120,6 +112,7 @@ public class NextTurn : MonoBehaviour
                 selectedCard = null;
             }
         }
+        SetNextTurnColor();
     }
 
     public void ActionSelected(Action action)
@@ -144,7 +137,20 @@ public class NextTurn : MonoBehaviour
                 selectedAction = null;
             }
         }
+        SetNextTurnColor();
+    }
 
+    public void SetNextTurnColor()
+    {
+        if (cardSelected || actionSelected)
+        {
+            nextTurnColor.a = 1f;
+        }
+        else 
+        {
+            nextTurnColor.a = 0.5f;   
+        }
+        meshRenderer.material.color = nextTurnColor;
     }
 
     private void SetAction(BaseAction baseAction)
