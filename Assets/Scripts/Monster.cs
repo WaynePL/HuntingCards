@@ -40,6 +40,13 @@ public class Monster : MonoBehaviour
     }
 }
 
+public class Attack
+{
+    public string attackName;
+    public int damage;
+    public int turns;
+}
+
 public class MonsterStats
 {
     public int health = 1000;
