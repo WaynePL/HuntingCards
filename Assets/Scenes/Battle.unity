@@ -811,6 +811,7 @@ GameObject:
   - component: {fileID: 334419972}
   - component: {fileID: 334419974}
   - component: {fileID: 334419973}
+  - component: {fileID: 334419975}
   m_Layer: 0
   m_Name: Health Bar
   m_TagString: Untagged
@@ -853,6 +854,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 334419974}
   health: {fileID: 316663077}
+  healthText: {fileID: 0}
 --- !u!114 &334419974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -904,6 +906,27 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!65 &334419975
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 334419971}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 6, y: 0.5, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &344472362
 GameObject:
   m_ObjectHideFlags: 0
@@ -1192,6 +1215,7 @@ GameObject:
   - component: {fileID: 421117421}
   - component: {fileID: 421117423}
   - component: {fileID: 421117422}
+  - component: {fileID: 421117424}
   m_Layer: 0
   m_Name: Stamina Bar
   m_TagString: Untagged
@@ -1234,6 +1258,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   staminaBar: {fileID: 421117423}
   stamina: {fileID: 316663079}
+  staminaText: {fileID: 0}
 --- !u!114 &421117423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1285,6 +1310,27 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!65 &421117424
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 421117420}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 6, y: 0.5, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &524478314
 GameObject:
   m_ObjectHideFlags: 0
@@ -1871,10 +1917,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a250c3f65dcfe06439db24684e22cd0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 1
+  time: 2
   actionName: Dodge Roll
   description: Evade an attack for 2 turns
-  staminaCost: 50
+  staminaCost: 60
   damage: 0
   nextTurn: {fileID: 1868314576}
 --- !u!1 &705507993
@@ -3046,7 +3092,7 @@ RectTransform:
   m_GameObject: {fileID: 1188018978}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1.425, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 334419972}
@@ -3055,7 +3101,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 5.1000004, y: 1.0699997}
+  m_AnchoredPosition: {x: 0.28, y: 3.95}
   m_SizeDelta: {x: 6.0472, y: 1.4461}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1211269332
@@ -3069,6 +3115,7 @@ GameObject:
   - component: {fileID: 1211269335}
   - component: {fileID: 1211269334}
   - component: {fileID: 1211269333}
+  - component: {fileID: 1211269336}
   m_Layer: 0
   m_Name: Health Bar
   m_TagString: Untagged
@@ -3090,6 +3137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 1211269334}
   health: {fileID: 195173472}
+  healthText: {fileID: 0}
 --- !u!114 &1211269334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3162,6 +3210,27 @@ RectTransform:
   m_AnchoredPosition: {x: 0.0004825592, y: 0.3045}
   m_SizeDelta: {x: 0.002, y: -0.9382}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!65 &1211269336
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1211269332}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 6, y: 0.5, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1214566018
 GameObject:
   m_ObjectHideFlags: 0
@@ -5074,7 +5143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a250c3f65dcfe06439db24684e22cd0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 3
+  time: 5
   actionName: Heavy Attack
   description: 
   staminaCost: 15
@@ -5113,7 +5182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a250c3f65dcfe06439db24684e22cd0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 2
+  time: 3
   actionName: Light Attack
   description: 
   staminaCost: 10

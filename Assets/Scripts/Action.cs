@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class Action : BaseAction
 {
-    public int staminaCost = 0;
     public int damage = 0;
 
     public NextTurn nextTurn;

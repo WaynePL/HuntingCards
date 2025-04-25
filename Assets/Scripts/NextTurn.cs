@@ -65,7 +65,6 @@ public class NextTurn : MonoBehaviour
                 totalTurns = selectedCard.time;
                 cardSelected = false;
                 deck.DiscardCard(selectedCard);
-                selectedCard = null;
 
             }
             if (actionSelected)
@@ -73,7 +72,6 @@ public class NextTurn : MonoBehaviour
                 totalTurns = selectedAction.time;
                 actionSelected = false;
                 selectedAction.DeselectAction();
-                selectedAction = null;
             }
             UnsetAction();
             turnNumber += totalTurns;
@@ -81,7 +79,17 @@ public class NextTurn : MonoBehaviour
             int remainingTurns = monster.attack.turns + monster.attack.startTurn - turnNumber;
             if (remainingTurns <= 0)
             {
-                incomingTurn.damageToPlayer = monster.attack.damage;
+                if(selectedAction.actionName != "Dodge Roll")
+                {
+                    if(selectedAction.actionName == "Defend")
+                    {
+                        incomingTurn.damageToPlayer = monster.attack.damage / 2;
+                    }
+                    else
+                    {
+                        incomingTurn.damageToPlayer = monster.attack.damage;
+                    }
+                }
                 monster.SetMonsterAttack(turnNumber + remainingTurns);
                 monster.UpdateMonsterAttack(turnNumber);
             }
@@ -90,6 +98,8 @@ public class NextTurn : MonoBehaviour
                 incomingTurn.damageToPlayer = 0;
                 monster.UpdateMonsterAttack(turnNumber);
             }
+            selectedAction = null;
+            selectedCard = null;
 
             player.DamagePlayer(incomingTurn.damageToPlayer);
             monster.DamageMonster(incomingTurn.damageToMonster);
@@ -171,7 +181,7 @@ public class NextTurn : MonoBehaviour
         actionObjectText.transform.position = new Vector3(player.transform.position.x - 10, player.transform.position.y + 2, player.transform.position.z);
         actionObjectText.AddComponent<MeshRenderer>();
         actionObjectText.AddComponent<TextMesh>();
-        actionObjectText.GetComponent<TextMesh>().text = baseAction.name + "\nTurns: " + baseAction.time + "\n" + baseAction.description;
+        actionObjectText.GetComponent<TextMesh>().text = baseAction.name + "\nTurns: " + baseAction.time + "\nStamina: " + baseAction.staminaCost + "\n" + baseAction.description;
         actionObjectText.GetComponent<TextMesh>().color = Color.black;
         actionObjectText.GetComponent<TextMesh>().fontSize = 30;
         actionObjectText.transform.localScale *= 0.4f;
@@ -181,6 +191,12 @@ public class NextTurn : MonoBehaviour
     {
         Destroy(actionObject.transform.GetChild(0).gameObject);
     }
+    public void AdvanceTurn()
+    {
+        turnNumber += 1;
+        transform.GetComponentInChildren<TextMesh>().text = "Turn Number: " + turnNumber.ToString();
+    }
+
 }
 [Serializable]
 public class Turn
