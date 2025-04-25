@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 
 public class NextTurn : MonoBehaviour
 {
-    public int turnNumber = 0;
+    public int turnNumber = 1;
     public int actionEnd = 0;
     public Action monsterAction;
     public Stack<Stack<Action>> monsterActions;
@@ -32,6 +32,8 @@ public class NextTurn : MonoBehaviour
         monster = GameObject.Find("Monster").GetComponent<Monster>();
         nextTurnColor = meshRenderer.material.color;
         actionObject = new GameObject("Action");
+        
+
     }
 
     // Update is called once per frame
@@ -56,10 +58,7 @@ public class NextTurn : MonoBehaviour
         {
             
         
-            player.DamagePlayer(incomingTurn.damageToPlayer);
-            monster.DamageMonster(incomingTurn.damageToMonster);
-            player.HealPlayer(incomingTurn.healtoPlayer);
-            player.TirePlayer(incomingTurn.staminaUsed);
+            
             int totalTurns = 0;
             if (cardSelected) 
             {
@@ -79,11 +78,23 @@ public class NextTurn : MonoBehaviour
             UnsetAction();
             turnNumber += totalTurns;
             transform.GetComponentInChildren<TextMesh>().text = "Turn Number: " + turnNumber.ToString();
-            if (turnNumber % 5 == 0) monster.runAway();
-            if (monster.currentArea != deck.currentArea)
+            int remainingTurns = monster.attack.turns + monster.attack.startTurn - turnNumber;
+            if (remainingTurns <= 0)
             {
-                monster.gameObject.SetActive(false);
+                incomingTurn.damageToPlayer = monster.attack.damage;
+                monster.SetMonsterAttack(turnNumber + remainingTurns);
+                monster.UpdateMonsterAttack(turnNumber);
             }
+            else 
+            {
+                incomingTurn.damageToPlayer = 0;
+                monster.UpdateMonsterAttack(turnNumber);
+            }
+
+            player.DamagePlayer(incomingTurn.damageToPlayer);
+            monster.DamageMonster(incomingTurn.damageToMonster);
+            player.HealPlayer(incomingTurn.healtoPlayer);
+            player.TirePlayer(incomingTurn.staminaUsed);
         
         }
     }
@@ -160,7 +171,7 @@ public class NextTurn : MonoBehaviour
         actionObjectText.transform.position = new Vector3(player.transform.position.x - 10, player.transform.position.y + 2, player.transform.position.z);
         actionObjectText.AddComponent<MeshRenderer>();
         actionObjectText.AddComponent<TextMesh>();
-        actionObjectText.GetComponent<TextMesh>().text = baseAction.name + " " + baseAction.time;
+        actionObjectText.GetComponent<TextMesh>().text = baseAction.name + "\nTurns: " + baseAction.time + "\n" + baseAction.description;
         actionObjectText.GetComponent<TextMesh>().color = Color.black;
         actionObjectText.GetComponent<TextMesh>().fontSize = 30;
         actionObjectText.transform.localScale *= 0.4f;
