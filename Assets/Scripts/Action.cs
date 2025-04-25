@@ -28,30 +28,33 @@ public class Action : BaseAction
 
     public void OnMouseDown()
     {
-        if (nextTurn.cardSelected || nextTurn.actionSelected) 
+        if (nextTurn.player.playerStamina.curStamina >= staminaCost)
         {
-            if (nextTurn.actionSelected && nextTurn.selectedAction != this)
+            if (nextTurn.cardSelected || nextTurn.actionSelected) 
             {
-                nextTurn.selectedAction.DeselectAction();
-                nextTurn.ActionSelected(this);
-                transform.position = new Vector3(transform.position.x, -15, transform.position.z);
+                if (nextTurn.actionSelected && nextTurn.selectedAction != this)
+                {
+                    nextTurn.selectedAction.DeselectAction();
+                    nextTurn.ActionSelected(this);
+                    transform.position = new Vector3(transform.position.x, -15, transform.position.z);
+                }
+                else
+                {
+                    nextTurn.ActionSelected(null);
+                    DeselectAction();
+                }
+                if(nextTurn.selectedCard != null) 
+                {
+                    nextTurn.CardSelected(null);
+                    nextTurn.ActionSelected(this);
+                    transform.position = new Vector3(transform.position.x, -15, transform.position.z);
+                }
             }
             else
             {
-                nextTurn.ActionSelected(null);
-                DeselectAction();
-            }
-            if(nextTurn.selectedCard != null) 
-            {
-                nextTurn.CardSelected(null);
                 nextTurn.ActionSelected(this);
                 transform.position = new Vector3(transform.position.x, -15, transform.position.z);
             }
-        }
-        else
-        {
-            nextTurn.ActionSelected(this);
-            transform.position = new Vector3(transform.position.x, -15, transform.position.z);
         }
     }
 
