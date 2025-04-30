@@ -212,7 +212,7 @@ GameObject:
   - component: {fileID: 6172396445819938861}
   - component: {fileID: 6862014438145551903}
   m_Layer: 0
-  m_Name: Herb
+  m_Name: Boulder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -249,7 +249,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   time: 5
-  actionName: Herb
+  actionName: Herbs
   description: Craft herbs into a potion
   staminaCost: 0
   damage: 0
@@ -257,8 +257,6 @@ MonoBehaviour:
   location: 1
   nextTurn: {fileID: 0}
   handPosition: 0
-  craftable: 1
-  cardToCraft: {fileID: 6172396445819938861, guid: 20d44b91f0e231c4880b29b46ef8ae10, type: 3}
 --- !u!65 &6862014438145551903
 BoxCollider:
   m_ObjectHideFlags: 0

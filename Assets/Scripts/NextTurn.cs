@@ -19,11 +19,14 @@ public class NextTurn : MonoBehaviour
     public Turn incomingTurn;
     public bool cardSelected;
     public bool actionSelected;
+    public bool potionSelected;
     Color nextTurnColor;
     public Deck deck;
     public Card selectedCard;
     public Action selectedAction;
     GameObject actionObject;
+    public Action potion;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -56,22 +59,33 @@ public class NextTurn : MonoBehaviour
         //player action
         if (cardSelected || actionSelected)
         {
-            
-        
+            string actionName = "";
             
             int totalTurns = 0;
             if (cardSelected) 
             {
+                actionName = selectedCard.actionName;
                 totalTurns = selectedCard.time;
-                cardSelected = false;
                 deck.DiscardCard(selectedCard);
-
+                if (selectedCard.craftable)
+                {
+                    if (selectedCard.actionName == "Herb")
+                    {
+                        potion.quantity += 1;
+                        potion.UpdateQuantity();
+                    }
+                }
             }
             if (actionSelected)
             {
+                actionName = selectedAction.actionName;
                 totalTurns = selectedAction.time;
-                actionSelected = false;
                 selectedAction.DeselectAction();
+                if (actionName == "Potion")
+                {
+                    potion.quantity -= 1;
+                    potion.UpdateQuantity();
+                }
             }
             UnsetAction();
             turnNumber += totalTurns;
@@ -79,9 +93,9 @@ public class NextTurn : MonoBehaviour
             int remainingTurns = monster.attack.turns + monster.attack.startTurn - turnNumber;
             if (remainingTurns <= 0)
             {
-                if(selectedAction.actionName != "Dodge Roll")
+                if(actionName != "Dodge Roll")
                 {
-                    if(selectedAction.actionName == "Defend")
+                    if(actionName == "Defend")
                     {
                         incomingTurn.damageToPlayer = monster.attack.damage / 2;
                     }
@@ -100,6 +114,8 @@ public class NextTurn : MonoBehaviour
             }
             selectedAction = null;
             selectedCard = null;
+            actionSelected = false;
+            cardSelected = false;
 
             player.DamagePlayer(incomingTurn.damageToPlayer);
             monster.DamageMonster(incomingTurn.damageToMonster);
@@ -116,11 +132,6 @@ public class NextTurn : MonoBehaviour
             cardSelected = true;
             selectedCard = card;
             ActionSelected(null);
-            if (card.damage > 0)
-            {
-                incomingTurn.damageToMonster = card.damage;
-            }
-            incomingTurn.healtoPlayer = card.heal > 0 ? card.heal : 0;
             SetAction(card);
 
         }
@@ -146,12 +157,16 @@ public class NextTurn : MonoBehaviour
             selectedAction = action;
             incomingTurn.damageToMonster = action.damage;
             incomingTurn.staminaUsed = action.staminaCost;
+            incomingTurn.healtoPlayer = action.heal;
             SetAction(action);
 
         }
         else
         {
             actionSelected = false;
+            incomingTurn.damageToMonster = 0;
+            incomingTurn.staminaUsed = 0;
+            incomingTurn.healtoPlayer = 0;
             if (selectedAction)
             {
                 selectedAction.DeselectAction();
@@ -176,20 +191,53 @@ public class NextTurn : MonoBehaviour
 
     private void SetAction(BaseAction baseAction)
     {
-        GameObject actionObjectText = new GameObject();
-        actionObjectText.transform.parent = actionObject.transform;
-        actionObjectText.transform.position = new Vector3(player.transform.position.x - 10, player.transform.position.y + 2, player.transform.position.z);
-        actionObjectText.AddComponent<MeshRenderer>();
-        actionObjectText.AddComponent<TextMesh>();
-        actionObjectText.GetComponent<TextMesh>().text = baseAction.name + "\nTurns: " + baseAction.time + "\nStamina: " + baseAction.staminaCost + "\n" + baseAction.description;
-        actionObjectText.GetComponent<TextMesh>().color = Color.black;
-        actionObjectText.GetComponent<TextMesh>().fontSize = 30;
-        actionObjectText.transform.localScale *= 0.4f;
+        GameObject nameText = new GameObject();
+        nameText.transform.parent = actionObject.transform;
+        nameText.transform.position = new Vector3(player.transform.position.x - 10, player.transform.position.y + 2, player.transform.position.z);
+        nameText.AddComponent<MeshRenderer>();
+        nameText.AddComponent<TextMesh>();
+        nameText.GetComponent<TextMesh>().text = baseAction.actionName;
+        nameText.GetComponent<TextMesh>().color = Color.black;
+        nameText.GetComponent<TextMesh>().fontSize = 30;
+        nameText.transform.localScale *= 0.4f;
+
+        GameObject turnText = new GameObject();
+        turnText.transform.parent = actionObject.transform;
+        turnText.transform.position = new Vector3(player.transform.position.x - 10, player.transform.position.y + 1, player.transform.position.z);
+        turnText.AddComponent<MeshRenderer>();
+        turnText.AddComponent<TextMesh>();
+        turnText.GetComponent<TextMesh>().text = "Turns: " + baseAction.time;
+        turnText.GetComponent<TextMesh>().color = Color.black;
+        turnText.GetComponent<TextMesh>().fontSize = 30;
+        turnText.transform.localScale *= 0.4f;
+
+        GameObject staminaText = new GameObject();
+        staminaText.transform.parent = actionObject.transform;
+        staminaText.transform.position = new Vector3(player.transform.position.x - 10, player.transform.position.y , player.transform.position.z);
+        staminaText.AddComponent<MeshRenderer>();
+        staminaText.AddComponent<TextMesh>();
+        staminaText.GetComponent<TextMesh>().text = "Stamina: " + baseAction.staminaCost;
+        staminaText.GetComponent<TextMesh>().color = Color.black;
+        staminaText.GetComponent<TextMesh>().fontSize = 30;
+        staminaText.transform.localScale *= 0.4f;
+
+        GameObject descriptionText = new GameObject();
+        descriptionText.transform.parent = actionObject.transform;
+        descriptionText.transform.position = new Vector3(player.transform.position.x - 10, player.transform.position.y - 1, player.transform.position.z);
+        descriptionText.AddComponent<MeshRenderer>();
+        descriptionText.AddComponent<TextMesh>();
+        descriptionText.GetComponent<TextMesh>().text = baseAction.description;
+        descriptionText.GetComponent<TextMesh>().color = Color.black;
+        descriptionText.GetComponent<TextMesh>().fontSize = 30;
+        descriptionText.transform.localScale *= 0.4f;
     }
 
     public void UnsetAction()
     {
-        Destroy(actionObject.transform.GetChild(0).gameObject);
+        foreach (Transform child in actionObject.transform)
+        {
+            Destroy(child.gameObject);
+        }
     }
     public void AdvanceTurn()
     {

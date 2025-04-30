@@ -9,11 +9,13 @@ public class Card : BaseAction
     public Location location;
     public NextTurn nextTurn;
     public int handPosition;
+    public bool craftable;
+    public Card cardToCraft;
     void Start()
     {
         transform.GetChild(1).GetComponent<TextMesh>().text = damage.ToString();
         transform.GetChild(2).GetComponent<TextMesh>().text = actionName;
-        nextTurn = GameObject.Find("Next Turn Button").GetComponentInChildren<NextTurn>();
+        nextTurn = GameObject.FindWithTag("NextTurn").GetComponentInChildren<NextTurn>();
     }   
 
     public void SetLocation(Location location)

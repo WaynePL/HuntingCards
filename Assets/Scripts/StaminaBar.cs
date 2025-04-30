@@ -19,7 +19,7 @@ public class StaminaBar : MonoBehaviour
         staminaText.GetComponent<TextMesh>().color = Color.black;
         staminaText.GetComponent<TextMesh>().fontSize = 30;
         staminaText.transform.localScale *= 0.4f;
-        staminaText.transform.position = new Vector3(transform.position.x + 3.5f, transform.position.y + 0.5f, transform.position.z);
+        staminaText.transform.position = new Vector3(transform.position.x + 5f, transform.position.y + 0.5f, transform.position.z);
     }
     public void SetStamina(int sp)
     {

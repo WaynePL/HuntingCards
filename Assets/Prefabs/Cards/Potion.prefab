@@ -248,8 +248,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1b9bf830ada33044ae7ea6e9630aba4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  time: 2
+  actionName: 
   description: Potion heals 20 HP
-  cardName: 
+  staminaCost: 0
   damage: 0
   heal: 20
   location: 1
